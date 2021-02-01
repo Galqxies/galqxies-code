@@ -1,0 +1,117 @@
+import random
+def makeKhipu():
+  translat = input("What number(s) would you like your 'khipu' to display?\n")
+  translating = []
+  translatex = []
+  for i in translat:
+    if str(i) == ' ':
+      translatex.append("".join(translating))
+      translating = []
+    else:
+      translating.append(str(i))
+  translatex.append("".join(translating))
+  for translate in translatex:
+    length1 = len(translate)
+    khipu = []
+    word = []
+    varX = 0
+    if length1 < 6:
+      varX = 5 - length1
+      for i in range(0,varX):
+        khipu.append("")
+    for i in str(translate):
+      if length1 == 1:
+        if int(i) == 1:
+          char = "E"
+        else:
+          char = "_"
+      else:
+        numb = random.randint(1,2)
+        if numb == 1:
+          char = "S"
+        if numb == 2:
+          char = "Z"
+      for g in range(0,int(i)):
+        word.append(char)
+      khipu.append("".join(word))
+      word = []
+      length1 = length1 - 1
+    khipu.append(" ")
+    print("-" + "-".join(khipu))
+
+def readKhipu():
+  translate = input("Please enter the recording of your 'khipu':\n")
+  number = []
+  value = 0
+  for i in translate:
+    if i == "-":
+      number.append(str(value))
+      value = 0
+    else:
+      value = value + 1
+  print("Your khipu's value is...")
+  print("".join(number))
+
+def wordsToNum():
+  words = input("What words would you like to search for? No capitals, puncuation, and put only spaces in between words.\n")
+  word = []
+  translate = []
+  translated = []
+  for i in words:
+    if i != ' ':
+      word.append(i)
+    else:
+      translate.append("".join(word))
+      word = []
+  translate.append("".join(word))
+  test = open("message (6).txt")
+  lines = test.readlines()
+  for i in translate:
+    done = False
+    x = 0
+    while done == False:
+      search = lines[x]
+      searched = []
+      y = 1
+      for h in search:
+        if y != len(search):
+          searched.append(h)
+        y = y + 1
+      compare = "".join(searched)
+      if compare == i:
+        translated.append(str(x))
+        done = True
+      else:
+        x = x + 1
+        if x == 58116:
+          print("One of those words isn't on my list try again without some of those words  :( (make sure you didn't put any extra spaces and stuff)")
+          exit()
+  print(" ".join(translated))
+
+def numsToWord():
+  inputx = input("What numbers do you want to be translate? Put only the numbers and a space between them all.\n")
+  number = []
+  numbers = []
+  words = []
+  for i in inputx:
+    if str(i) == ' ':
+      numbers.append("".join(number))
+      number = []
+    else:
+      number.append(str(i))
+  numbers.append("".join(number))
+  test = open("message (6).txt")
+  lines = test.readlines()
+  wprd = []
+  for i in numbers:
+    y = 1
+    sevem = lines[int(i)]
+    for h in sevem:
+      if y != len(sevem):
+        wprd.append(h)
+        y = y + 1
+    words.append("".join(wprd))
+    wprd = []
+  print(" ".join(words))
+
+numsToWord()
